@@ -1,132 +1,902 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>ห้องเรียนครูพุทธา</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Updated: Jul 27 2023 with Bootstrap v5.3.1
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เกมแยกข้อเท็จจริงและข้อคิดเห็น - วิทยาการคำนวณ ป.5</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Sriracha & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sriracha&display=swap" rel="stylesheet">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background-color: #fdf6e2; /* Warm chalkboard background feel */
+      background-image: radial-gradient(#f0e2be 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .sriracha-font {
+      font-family: 'Sriracha', cursive;
+    }
+    .drag-item {
+      transition: all 0.2s ease;
+      touch-action: none;
+    }
+    .drag-item:hover {
+      transform: scale(1.05);
+    }
+    .drop-zone {
+      transition: all 0.3s ease;
+    }
+    .active-drag {
+      border-color: #f59e0b;
+      background-color: #fef3c7;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      70% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-bounce-in {
+      animation: bounceIn 0.5s ease-out forwards;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-modal, #certificate-paper, #certificate-paper * {
+        visibility: visible;
+      }
+      #certificate-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        background: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
+<body class="min-h-screen flex flex-col justify-between text-gray-800">
 
-<body>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-amber-600 via-orange-500 to-amber-700 text-white shadow-lg border-b-4 border-amber-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center gap-3">
+        <div class="bg-yellow-100 p-2 rounded-full shadow-inner relative">
+          <!-- Lightbulb Icon resembling the top-right decoration in the image -->
+          <i class="fa-solid fa-lightbulb text-3xl text-amber-500 animate-pulse"></i>
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold tracking-wide sriracha-font">เกมแยกแยะ "ข้อเท็จจริง" และ "ข้อคิดเห็น"</h1>
+          <p class="text-xs text-amber-100 font-light">วิชาวิทยาการคำนวณ ชั้นประถมศึกษาปีที่ 5 (การประเมินความน่าเชื่อถือของข้อมูล)</p>
+        </div>
+      </div>
+      <div class="flex gap-3 text-sm font-medium">
+        <div class="bg-black/20 px-3 py-1.5 rounded-full flex items-center gap-2 border border-white/10">
+          <i class="fa-solid fa-star text-yellow-300"></i>
+          <span id="score-banner" class="font-bold">คะแนน: 0 / 8</span>
+        </div>
+        <button id="btn-sound-toggle" class="bg-black/20 hover:bg-black/30 px-3 py-1.5 rounded-full transition border border-white/10">
+          <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
 
-  <!-- ======= Mobile nav toggle button ======= -->
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+  <!-- Main Game Container -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow flex flex-col lg:flex-row gap-6">
+    
+    <!-- Left Column: Instructions & Answers Bank -->
+    <section class="lg:w-1/3 flex flex-col gap-4">
+      <!-- Instructions Card -->
+      <div class="bg-white p-5 rounded-2xl shadow-md border-2 border-amber-200">
+        <h2 class="text-lg font-bold text-amber-800 mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-graduation-cap"></i> แนะนำวิธีการเล่น
+        </h2>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed">
+          ให้นักเรียนพิจารณาประโยคข้อความทั้ง 8 ข้อ แล้วเลือกว่าข้อความใดเป็น <strong>ข้อเท็จจริง (ข้อมูลจริงที่มีหลักฐาน)</strong> หรือ <strong>ข้อคิดเห็น (ความรู้สึก/ความคิดส่วนตัว)</strong>
+        </p>
+        <ol class="list-decimal list-inside text-xs text-gray-500 space-y-1.5 border-t pt-2 border-gray-100">
+          <li><strong>วิธีที่ 1 (ลากวาง):</strong> ลากป้ายสีแดงหรือสีฟ้าจากด้านล่าง ไปวางในช่องว่างหน้าข้อความ</li>
+          <li><strong>วิธีที่ 2 (สัมผัสหน้าจอ):</strong> จิ้มที่ป้ายด้านล่าง 1 ครั้ง แล้วไปจิ้มที่ช่องว่างหน้าข้อที่ต้องการตอบได้เลย!</li>
+        </ol>
+      </div>
 
-  <!-- ======= Header ======= -->
-  <header id="header">
-    <div class="d-flex flex-column">
+      <!-- Word Bank (Unlimited items model - we cloning items during drag) -->
+      <div class="bg-white p-5 rounded-2xl shadow-md border-2 border-amber-200 flex-grow flex flex-col justify-center">
+        <h2 class="text-md font-bold text-gray-700 mb-4 flex items-center gap-2 justify-center">
+          <i class="fa-solid fa-hand-pointer text-amber-500"></i> เลือกคำตอบที่ถูกต้อง
+        </h2>
+        
+        <!-- Draggable items (Two choices infinite supply) -->
+        <div id="answers-bank" class="flex flex-col gap-4 sm:flex-row lg:flex-col justify-center px-2">
+          
+          <!-- Answer Choice 1: Fact -->
+          <div id="ans-fact" draggable="true" data-criteria="fact" class="drag-item cursor-grab bg-gradient-to-r from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 border-2 border-red-400 rounded-xl p-4 shadow-md flex items-center justify-between flex-1">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white shadow-sm shrink-0">
+                <i class="fa-solid fa-circle-check text-lg"></i>
+              </div>
+              <div class="text-left">
+                <p class="font-bold text-lg text-red-700 sriracha-font">ข้อเท็จจริง</p>
+                <p class="text-[11px] text-red-600">เป็นจริง มีหลักฐานพิสูจน์ได้</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-grip-vertical text-red-300"></i>
+          </div>
 
-      <div class="profile">
-        <img src="assets/img/profile-img.png" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light text-center"><a href="index.html">ห้องเรียนครูพุทธา</a></h1>
-        <h6 class="text-light text-center"><a>โรงเรียนบ้านบะแค อบจ.ขอนแก่น</a></h6>
-        <div class="social-links mt-3 text-center">
-          <a href="https://www.facebook.com/BanbakaeSchool" class="facebook"><i class="bx bxl-facebook"></i></a>          
-          <a href="http://www.bakae.ac.th/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          <!-- Answer Choice 2: Opinion -->
+          <div id="ans-opinion" draggable="true" data-criteria="opinion" class="drag-item cursor-grab bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border-2 border-blue-400 rounded-xl p-4 shadow-md flex items-center justify-between flex-1">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white shadow-sm shrink-0">
+                <i class="fa-solid fa-comment-dots text-lg"></i>
+              </div>
+              <div class="text-left">
+                <p class="font-bold text-lg text-blue-700 sriracha-font">ข้อคิดเห็น</p>
+                <p class="text-[11px] text-blue-600">ความรู้สึก คาดคะเน แนะนำ</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-grip-vertical text-blue-300"></i>
+          </div>
+
+        </div>
+        <p class="text-[11px] text-center text-gray-400 mt-4 italic">*ป้ายคำตอบข้างต้นสามารถลากไปใช้ตอบได้ซ้ำไม่จำกัดจำนวนครั้ง</p>
+      </div>
+    </section>
+
+    <!-- Right Column: Question Board (Based exactly on user's image) -->
+    <section class="lg:w-2/3 flex flex-col gap-4">
+      <div class="bg-white p-6 rounded-3xl shadow-lg border-4 border-amber-900/10 flex-grow flex flex-col justify-between relative overflow-hidden">
+        
+        <!-- Notebook decorative line on the left to resemble real Thai school worksheet -->
+        <div class="absolute left-3 top-0 bottom-0 w-1 bg-red-200"></div>
+        <div class="absolute left-5 top-0 bottom-0 w-0.5 bg-red-200"></div>
+
+        <div class="pl-4">
+          <div class="flex justify-between items-center mb-6 pb-2 border-b-2 border-dashed border-gray-100">
+            <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-pen-clip text-amber-600"></i> เติมคำตอบลงในช่องว่างให้ถูกต้อง
+            </h2>
+            <span class="text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-bold">ใบงานที่ 1 (8 ข้อ)</span>
+          </div>
+
+          <!-- Questions list (matching the image) -->
+          <div class="space-y-3.5">
+            
+            <!-- Question 1 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="fact">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">1)</span>
+                <!-- Drop Zone -->
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">ช้างกินกล้วยและอ้อยเป็นอาหาร</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="opinion">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">2)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">เสือเป็นสัตว์ที่น่ากลัวมาก</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="opinion">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">3)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">ทุกคนไม่ควรเลี้ยงงูเป็นสัตว์เลี้ยง</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="fact">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">4)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">เสือชีตาร์วิ่งเร็วกว่าสิงโต</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="opinion">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">5)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">หมีแพนด้าเป็นสัตว์ที่หน้าตาน่ารัก</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="fact">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">6)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">วาฬสีน้ำเงินเป็นสัตว์ที่มีขนาดใหญ่ที่สุดในโลก</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="fact">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">7)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">จ๋อมแจ๋มเห็นแพนด้าแดงที่สวนสัตว์</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition" data-correct="opinion">
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="font-bold text-gray-500 text-sm w-6 text-right">8)</span>
+                <div class="drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer" data-placed="">
+                  .....................................
+                </div>
+              </div>
+              <div class="flex-grow text-left">
+                <p class="text-sm sm:text-base font-semibold text-gray-700">นกแก้วที่มีหางสีเขียวจะร้องเพลงเก่ง</p>
+              </div>
+              <div class="score-indicator hidden items-center justify-center px-2 shrink-0"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Check Answers Section -->
+        <div class="mt-8 pt-4 border-t-2 border-dashed border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-3 pl-4">
+          <button id="btn-reset" class="w-full sm:w-auto px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-arrow-rotate-left"></i> ล้างคำตอบทั้งหมด
+          </button>
+          <button id="btn-submit" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-700 hover:to-orange-600 text-white font-bold rounded-xl shadow-lg shadow-orange-100 hover:shadow-orange-200 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-clipboard-check text-lg"></i> ส่งคำตอบและรับเกียรติบัตร
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal 1: Score & Congrats Summary Screen -->
+  <div id="summary-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative overflow-hidden flex flex-col items-center text-center animate-bounce-in">
+      
+      <!-- Confetti Canvas inside modal -->
+      <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-10 w-full h-full"></canvas>
+
+      <!-- Badge Icon -->
+      <div id="modal-badge-container" class="w-24 h-24 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500 flex items-center justify-center text-white text-5xl shadow-lg shadow-amber-200 mb-4 animate-bounce relative z-20">
+        <i class="fa-solid fa-award"></i>
+      </div>
+
+      <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-1 relative z-20 sriracha-font">เยี่ยมมากเจ้าหนูไอที!</h3>
+      <p id="modal-subtitle" class="text-sm text-gray-500 mb-4 relative z-20">คุณเข้าใจวิธีการคัดกรองข้อมูลข่าวสารแล้ว</p>
+      
+      <!-- Score Display -->
+      <div class="bg-amber-50 rounded-2xl px-6 py-4 border border-amber-100 mb-6 w-full relative z-20">
+        <span class="text-xs font-semibold text-amber-600 tracking-wider block uppercase mb-1">คะแนนรวมใบงาน</span>
+        <span id="modal-score" class="text-5.5xl font-black text-amber-700 sriracha-font">8 / 8</span>
+        <p id="modal-feedback" class="text-xs text-amber-600 mt-2 font-medium">เก่งมาก! ตอบถูกทุกข้อเลย สรุปข้อมูลได้อย่างถูกต้อง</p>
+      </div>
+
+      <!-- Action Area for Certificate -->
+      <div class="w-full space-y-3 z-20">
+        <div class="text-left w-full">
+          <label for="student-name" class="block text-xs font-semibold text-gray-500 mb-1"><i class="fa-solid fa-signature mr-1 text-amber-500"></i> พิมพ์ชื่อจริงของคุณ เพื่อลงในเกียรติบัตร:</label>
+          <input type="text" id="student-name" placeholder="เด็กชายก้าวหน้า วิชาการ" class="w-full px-4 py-2.5 rounded-xl border-2 border-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-center font-semibold text-gray-800 shadow-inner">
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <button id="btn-close-modal" class="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition">
+            กลับไปแก้ไขคำตอบ
+          </button>
+          <button id="btn-get-cert" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-100 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-scroll"></i> รับเกียรติบัตรออนไลน์
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Certificate View -->
+  <div id="certificate-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm overflow-y-auto flex justify-center p-4 py-12">
+    <div class="max-w-4xl w-full flex flex-col gap-6 items-center">
+      
+      <!-- Controls -->
+      <div class="no-print flex flex-wrap justify-between items-center w-full bg-white/10 backdrop-blur-md p-4 rounded-2xl gap-3 text-white">
+        <p class="text-sm"><i class="fa-solid fa-circle-info text-yellow-300 mr-1"></i> ผู้เรียนสามารถกดสั่งพิมพ์เกียรติบัตรออกมา หรือบันทึกเก็บเป็นไฟล์ PDF ได้</p>
+        <div class="flex gap-2">
+          <button id="btn-print-cert" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> พิมพ์ / บันทึก PDF
+          </button>
+          <button id="btn-close-cert" class="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl transition">
+            ปิดหน้าต่างนี้
+          </button>
         </div>
       </div>
 
-      <nav id="navbar" class="nav-menu navbar">
-        <ul>       
-          <li><a href="index.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li> 
-           <li><a href="https://script.google.com/a/macros/bakae.ac.th/s/AKfycbwb7jjnSUej7uVFVzrY0F_DvsaqjHRBsN5KWGcsQVtwQ_VOemdN49LxinizEwvm16fK/exec" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ลงชื่อเข้าใช้ห้องคอมพิวเตอร์</span></a></li>      
-          <li><a href="index8.2.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ป.1</span></a></li>
-           <li><a href="index1.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ป.4</span></a></li>
-          <li><a href="index5.1.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ป.5</span></a></li>
-          <li><a href="index3.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ป.6</span></a></li>
-          <li><a href="index6.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>แบบฝึกทักษะ Coding</span></a></li>
-          <li><a href="index4.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ห้องเรียนเฉพาะทางโค้ดดิ้ง</span></a></li>
-          <li><a href="Onet.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>ติว O-NET</span></a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
-    </div>
-  </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex text-center flex-column justify-content-center align-items-center" >
-    <img src="assets/img/profile-img1.jpg" alt="" class="img-fluid rounded-circle" width="250px" height="240px" ><br>
-    <div class="hero-container text-center" data-aos="fade-in">
-    <div class="text-center"> <h1></h1></div>
-    <h1>ห้องเรียนออนไลน์</h1>         
-      <p> <span class="typed" data-typed-items="ห้องเรียนครูพุทธา"></span></p>
-    </div>    
-  </section><!-- End Hero -->  
-
-  <main id="main"> 
-
-    
-           
-         
+      <!-- Certificate Paper Content -->
+      <div id="certificate-paper" class="bg-white text-gray-900 border-[16px] border-double border-amber-800 p-8 sm:p-12 md:p-16 rounded-sm w-full shadow-2xl relative flex flex-col justify-between aspect-[1.414/1] overflow-hidden">
         
-         
-
-    
-  </main><!-- End #main -->
-
-  
-   <!-- ======= Footer ======= -->
-  
-         
-           
+        <!-- Background Decorative Borders -->
+        <div class="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-amber-700"></div>
+        <div class="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-amber-700"></div>
+        <div class="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-amber-700"></div>
+        <div class="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-amber-700"></div>
         
-      
-      <div class="text-center">
-        ออกแบบโดย <strong></strong><a href="https://www.facebook.com/putta.wanglap">ครูพุทธา หวังลาภ</a></strong> &copy; Copyright <span>โรงเรียนบ้านบะแค</span>
+        <!-- Top Title Block -->
+        <div class="text-center">
+          <div class="flex justify-center items-center gap-2 mb-2">
+            <i class="fa-solid fa-award text-5xl text-amber-600"></i>
+          </div>
+          <h4 class="sriracha-font text-xl md:text-2xl text-amber-800 font-bold tracking-wider mb-1">กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี</h4>
+          <p class="text-xs sm:text-sm font-semibold tracking-wide text-gray-500 uppercase">หลักสูตรวิทยาการคำนวณออนไลน์ ระดับประถมศึกษา</p>
+        </div>
+
+        <!-- Middle Body Text -->
+        <div class="text-center my-6 md:my-8">
+          <h2 class="sriracha-font text-3xl md:text-5xl text-amber-700 font-extrabold tracking-widest mb-6">เกียรติบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า</h2>
+          
+          <!-- Recipient Name -->
+          <div class="inline-block border-b-2 border-dashed border-amber-800 min-w-[300px] sm:min-w-[450px] mb-4 pb-2">
+            <h3 id="cert-recipient-name" class="sriracha-font text-2xl md:text-4xl text-gray-800 font-bold">เด็กชายสมบูรณ์ ดีเรียน</h3>
+          </div>
+          
+          <p class="text-sm md:text-lg text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
+            ได้เข้าร่วมและผ่านการทำกิจกรรมวัดความรู้เรื่อง <strong class="text-amber-900 font-bold">"การแยกข้อเท็จจริงและข้อคิดเห็น"</strong>
+            เพื่อเสริมสร้างการมีวิจารณญาณในการวิเคราะห์ข้อมูลที่ถูกต้องในชีวิตประจำวัน
+          </p>
+          
+          <!-- Score Detail inside Certificate -->
+          <p class="text-sm font-bold text-emerald-700 mt-2">
+            ประเมินผลผ่านเกณฑ์ประสิทธิภาพระดับดีเยี่ยม คะแนนรวมที่ได้รับ: <span id="cert-score-text" class="text-lg">8 / 8 คะแนน</span>
+          </p>
+        </div>
+
+        <!-- Footer Signatures & Seal -->
+        <div class="flex justify-between items-end mt-4 px-4 sm:px-12">
+          
+          <!-- Left Sign -->
+          <div class="text-center flex flex-col items-center">
+            <div class="h-10 flex items-end justify-center mb-1">
+              <span class="sriracha-font italic text-md text-amber-700 font-semibold">- ครูพุทธา หวังลาภ -</span>
+            </div>
+            <div class="border-t border-gray-400 pt-1 w-40">
+              <p class="text-[11px] font-bold text-gray-700">ผู้ประเมินและคัดกรอง</p>
+              <p class="text-[9px] text-gray-500">ระบบเกณฑ์กลางการศึกษา</p>
+            </div>
+          </div>
+
+          <!-- Center Seal -->
+          <div class="flex justify-center items-center relative select-none">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-amber-500 rounded-full flex items-center justify-center border-4 border-amber-100 shadow-md">
+              <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full flex flex-col items-center justify-center text-amber-900 border border-yellow-100 shadow-inner">
+                <i class="fa-solid fa-circle-check text-lg"></i>
+                <span class="text-[8px] font-black uppercase tracking-wider">PASSED</span>
+              </div>
+            </div>
+            <div class="absolute top-[80%] left-[25%] w-3 h-8 bg-amber-600 rotate-[15deg] origin-top"></div>
+            <div class="absolute top-[80%] right-[25%] w-3 h-8 bg-amber-600 -rotate-[15deg] origin-top"></div>
+          </div>
+
+          <!-- Right Date -->
+          <div class="text-center flex flex-col items-center">
+            <div class="h-10 flex items-end justify-center mb-1">
+              <span id="cert-date" class="text-xs font-semibold text-gray-700">17 มิถุนายน พ.ศ. 2569</span>
+            </div>
+            <div class="border-t border-gray-400 pt-1 w-40">
+              <p class="text-[11px] font-bold text-gray-700">วันที่ได้รับการรับรอง</p>
+              <p class="text-[9px] text-gray-500">ผ่านระบบทดสอบอิเล็กทรอนิกส์</p>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-    
-  <!-- End  Footer -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    </div>
+  </div>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-400 py-4 mt-8">
+    <div class="max-w-6xl mx-auto px-4 text-center text-xs space-y-1">
+      <p>กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี (วิทยาการคำนวณ) ชั้นประถมศึกษาปีที่ 5</p>
+      <p>&copy; 2026 ระบบสร้างสรรค์สื่อดิจิทัลเพื่อการเรียนรู้รอบด้านแบบโต้ตอบเชิงผลลัพธ์.</p>
+    </div>
+  </footer>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <!-- Web Audio Synthesizer & Controller Code -->
+  <script>
+    let audioCtx = null;
+    let isSoundOn = true;
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
 
+    function playSound(type) {
+      if (!isSoundOn) return;
+      initAudio();
+      if (!audioCtx) return;
+      
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      
+      if (type === 'grab') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+        gainNode.gain.setValueAtTime(0.1, now);
+        gainNode.gain.linearRampToValueAtTime(0, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === 'drop') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(550, now);
+        osc.frequency.exponentialRampToValueAtTime(350, now + 0.15);
+        gainNode.gain.setValueAtTime(0.15, now);
+        gainNode.gain.linearRampToValueAtTime(0, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'success') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+        osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
+        gainNode.gain.setValueAtTime(0.15, now);
+        gainNode.gain.linearRampToValueAtTime(0, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } else if (type === 'fail') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now); // A3
+        osc.frequency.setValueAtTime(180, now + 0.15); 
+        gainNode.gain.setValueAtTime(0.15, now);
+        gainNode.gain.linearRampToValueAtTime(0, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      } else if (type === 'fanfare') {
+        const chords = [392.00, 523.25, 659.25, 783.99]; // Victory chord sequence
+        chords.forEach((freq, idx) => {
+          const oscNode = audioCtx.createOscillator();
+          const gainEl = audioCtx.createGain();
+          oscNode.connect(gainEl);
+          gainEl.connect(audioCtx.destination);
+          oscNode.type = 'triangle';
+          oscNode.frequency.setValueAtTime(freq, now + (idx * 0.08));
+          gainEl.gain.setValueAtTime(0.1, now + (idx * 0.08));
+          gainEl.gain.linearRampToValueAtTime(0, now + 0.5 + (idx * 0.08));
+          oscNode.start(now + (idx * 0.08));
+          oscNode.stop(now + 0.5 + (idx * 0.08));
+        });
+      }
+    }
+
+    // Toggle Sound Logic
+    const btnSoundToggle = document.getElementById('btn-sound-toggle');
+    const soundIcon = document.getElementById('sound-icon');
+    btnSoundToggle.addEventListener('click', () => {
+      isSoundOn = !isSoundOn;
+      if (isSoundOn) {
+        soundIcon.className = "fa-solid fa-volume-high";
+        initAudio();
+        playSound('grab');
+      } else {
+        soundIcon.className = "fa-solid fa-volume-xmark";
+      }
+    });
+
+    // Game Elements
+    const dragItems = document.querySelectorAll('.drag-item');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const btnReset = document.getElementById('btn-reset');
+    const btnSubmit = document.getElementById('btn-submit');
+    let activeSelection = null; // Used for touch taps
+
+    // Define label aesthetics for the dropped answers
+    const criteriaDetails = {
+      fact: { label: "ข้อเท็จจริง", bg: "bg-red-100", border: "border-red-300", text: "text-red-700" },
+      opinion: { label: "ข้อคิดเห็น", bg: "bg-blue-100", border: "border-blue-300", text: "text-blue-700" }
+    };
+
+    // Reset Game Function
+    function resetGame() {
+      dropZones.forEach(zone => {
+        zone.setAttribute('data-placed', '');
+        zone.className = "drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer";
+        zone.innerHTML = ".....................................";
+      });
+
+      // Clear highlights
+      dragItems.forEach(item => item.classList.remove('ring-4', 'ring-amber-500', 'scale-105'));
+      activeSelection = null;
+
+      // Clear indicators
+      document.querySelectorAll('.question-row').forEach(row => {
+        row.className = "question-row flex flex-col md:flex-row items-center gap-3 bg-amber-50/40 p-2.5 rounded-xl border border-amber-100 hover:border-amber-300 transition";
+      });
+      document.querySelectorAll('.score-indicator').forEach(ind => {
+        ind.className = "score-indicator hidden items-center justify-center px-2 shrink-0";
+        ind.innerHTML = "";
+      });
+
+      document.getElementById('score-banner').innerText = "คะแนน: 0 / 8";
+      playSound('grab');
+    }
+
+    btnReset.addEventListener('click', resetGame);
+
+    // Standard Desktop Drag-Drop Logic
+    dragItems.forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        initAudio();
+        e.dataTransfer.setData('text/plain', item.getAttribute('data-criteria'));
+        item.classList.add('opacity-50');
+        playSound('grab');
+      });
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('opacity-50');
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('active-drag');
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('active-drag');
+      });
+
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('active-drag');
+        const criteria = e.dataTransfer.getData('text/plain');
+        if (criteria) {
+          placeItemInZone(zone, criteria);
+        }
+      });
+    });
+
+    // Mobile / Click-Touch Alternative Match Logic
+    dragItems.forEach(item => {
+      item.addEventListener('click', () => {
+        initAudio();
+        // Clear previous item focus
+        dragItems.forEach(d => d.classList.remove('ring-4', 'ring-amber-500', 'scale-105'));
+        
+        if (activeSelection === item) {
+          activeSelection = null;
+        } else {
+          activeSelection = item;
+          item.classList.add('ring-4', 'ring-amber-500', 'scale-105');
+          playSound('grab');
+        }
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('click', () => {
+        initAudio();
+        if (activeSelection) {
+          const criteria = activeSelection.getAttribute('data-criteria');
+          placeItemInZone(zone, criteria);
+          
+          // Clear active focus
+          activeSelection.classList.remove('ring-4', 'ring-amber-500', 'scale-105');
+          activeSelection = null;
+        } else {
+          // Reset zone when clicked without an active selected label
+          if (zone.getAttribute('data-placed')) {
+            zone.setAttribute('data-placed', '');
+            zone.className = "drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-dashed border-gray-300 bg-white rounded-lg p-1 text-center text-xs text-gray-400 font-medium hover:border-amber-400 cursor-pointer";
+            zone.innerHTML = ".....................................";
+            playSound('drop');
+          }
+        }
+      });
+    });
+
+    // Universal placement handler
+    function placeItemInZone(zone, criteria) {
+      const details = criteriaDetails[criteria];
+      if (!details) return;
+
+      zone.setAttribute('data-placed', criteria);
+      zone.className = `drop-zone min-h-[46px] w-44 flex items-center justify-center border-2 border-solid ${details.border} ${details.bg} rounded-lg p-1 text-center text-sm ${details.text} font-bold cursor-pointer sriracha-font`;
+      zone.innerHTML = details.label;
+      playSound('drop');
+    }
+
+    // Submit Action & Grade calculation
+    btnSubmit.addEventListener('click', () => {
+      initAudio();
+      
+      let allFilled = true;
+      dropZones.forEach(zone => {
+        if (!zone.getAttribute('data-placed')) {
+          allFilled = false;
+        }
+      });
+
+      if (!allFilled) {
+        showWarnModal("ยังตอบไม่ครบ!", "กรุณาลากหรือเลือกป้ายคำตอบให้ครบทั้ง 8 ข้อก่อนกดส่งคำตอบนะครับ");
+        playSound('fail');
+        return;
+      }
+
+      let score = 0;
+      const total = 8;
+      const rows = document.querySelectorAll('.question-row');
+
+      rows.forEach(row => {
+        const zone = row.querySelector('.drop-zone');
+        const userAns = zone.getAttribute('data-placed');
+        const correctAns = row.getAttribute('data-correct');
+        const indicator = row.querySelector('.score-indicator');
+
+        indicator.classList.remove('hidden');
+        indicator.classList.add('flex');
+
+        if (userAns === correctAns) {
+          score++;
+          row.className = "question-row flex flex-col md:flex-row items-center gap-3 bg-emerald-50 p-2.5 rounded-xl border border-emerald-300 transition";
+          indicator.innerHTML = `<span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-md shadow-sm"><i class="fa-solid fa-check"></i></span>`;
+        } else {
+          row.className = "question-row flex flex-col md:flex-row items-center gap-3 bg-rose-50 p-2.5 rounded-xl border border-rose-300 transition";
+          indicator.innerHTML = `<span class="w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center text-md shadow-sm"><i class="fa-solid fa-xmark"></i></span>`;
+        }
+      });
+
+      // Update banner score
+      document.getElementById('score-banner').innerText = `คะแนน: ${score} / ${total}`;
+
+      // Open Modal Summary
+      showSummary(score, total);
+    });
+
+    // Custom non-intrusive warning modal
+    function showWarnModal(title, msg) {
+      const overlay = document.createElement('div');
+      overlay.className = "fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4";
+      overlay.innerHTML = `
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-xl border border-amber-500 animate-bounce-in">
+          <div class="text-4xl text-amber-500 mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <h4 class="text-lg font-bold text-gray-800">${title}</h4>
+          <p class="text-sm text-gray-600 mt-2">${msg}</p>
+          <button id="btn-close-warn" class="mt-4 px-6 py-2 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700 transition">ตกลง</button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      document.getElementById('btn-close-warn').addEventListener('click', () => {
+        overlay.remove();
+      });
+    }
+
+    // Modal Display Functions
+    const summaryModal = document.getElementById('summary-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalScore = document.getElementById('modal-score');
+    const modalFeedback = document.getElementById('modal-feedback');
+    const modalBadgeContainer = document.getElementById('modal-badge-container');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const btnGetCert = document.getElementById('btn-get-cert');
+
+    let finalGameScore = 0;
+
+    function showSummary(score, total) {
+      finalGameScore = score;
+      modalScore.innerText = `${score} / ${total}`;
+      
+      if (score === total) {
+        modalTitle.innerText = "ยอดเยี่ยมระดับเหรียญทอง! 🏆";
+        modalSubtitle.innerText = "หนูวิเคราะห์จำแนกข้อมูลข้อเท็จจริงและข้อคิดเห็นได้แม่นยำมาก!";
+        modalFeedback.innerText = "ผ่านเกณฑ์ 100% ตอบถูกต้องครบทั้ง 8 ข้อตามใบงาน";
+        modalBadgeContainer.className = "w-24 h-24 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500 flex items-center justify-center text-white text-5xl shadow-lg shadow-amber-200 mb-4 animate-bounce";
+        modalBadgeContainer.innerHTML = `<i class="fa-solid fa-crown text-white"></i>`;
+        playSound('success');
+        startConfetti();
+      } else if (score >= 5) {
+        modalTitle.innerText = "ผ่านการประเมินแล้ว! 🎉";
+        modalSubtitle.innerText = "ทำคะแนนได้ดีเยี่ยม ลองปรับปรุงส่วนที่ผิดอีกนิด!";
+        modalFeedback.innerText = "มีทักษะการประเมินแยกแยะข้อมูลที่ดีมากและสามารถรับใบประกาศได้";
+        modalBadgeContainer.className = "w-24 h-24 rounded-full bg-gradient-to-tr from-blue-400 to-indigo-500 flex items-center justify-center text-white text-5xl shadow-lg shadow-blue-200 mb-4";
+        modalBadgeContainer.innerHTML = `<i class="fa-solid fa-medal text-white"></i>`;
+        playSound('success');
+        startConfetti();
+      } else {
+        modalTitle.innerText = "ลองท้าทายใหม่อีกครั้ง! ✌️";
+        modalSubtitle.innerText = "ยังไม่ผ่านเกณฑ์ครึ่งหนึ่ง (ต้องได้ตั้งแต่ 5 คะแนนขึ้นไป)";
+        modalFeedback.innerText = "สังเกตคำจำกัดความ: ข้อเท็จจริงคือสิ่งที่จริงตามธรรมชาติ/มีวิทยาศาสตร์รับรอง";
+        modalBadgeContainer.className = "w-24 h-24 rounded-full bg-gradient-to-tr from-rose-400 to-red-500 flex items-center justify-center text-white text-5xl shadow-lg shadow-rose-200 mb-4";
+        modalBadgeContainer.innerHTML = `<i class="fa-solid fa-redo text-white"></i>`;
+        playSound('fail');
+      }
+
+      summaryModal.classList.remove('hidden');
+    }
+
+    btnCloseModal.addEventListener('click', () => {
+      summaryModal.classList.add('hidden');
+      stopConfetti();
+    });
+
+    // Certificate Generator & Print Setup
+    const certModal = document.getElementById('certificate-modal');
+    const btnCloseCert = document.getElementById('btn-close-cert');
+    const btnPrintCert = document.getElementById('btn-print-cert');
+    const inputStudentName = document.getElementById('student-name');
+    const certRecipientName = document.getElementById('cert-recipient-name');
+    const certScoreText = document.getElementById('cert-score-text');
+    const certDate = document.getElementById('cert-date');
+
+    btnGetCert.addEventListener('click', () => {
+      const studentName = inputStudentName.value.trim();
+      if (!studentName) {
+        inputStudentName.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+        setTimeout(() => {
+          inputStudentName.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+        }, 1500);
+        return;
+      }
+
+      // Populate details dynamically on Certificate template
+      certRecipientName.innerText = studentName;
+      certScoreText.innerText = `${finalGameScore} / 8 คะแนน`;
+      
+      // Dynamic Thai Date Setup
+      const monthsThai = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ];
+      const today = new Date();
+      const dateString = `${today.getDate()} ${monthsThai[today.getMonth()]} พ.ศ. ${today.getFullYear() + 543}`;
+      certDate.innerText = dateString;
+
+      // Swap views
+      summaryModal.classList.add('hidden');
+      stopConfetti();
+      certModal.classList.remove('hidden');
+      playSound('fanfare');
+    });
+
+    btnCloseCert.addEventListener('click', () => {
+      certModal.classList.add('hidden');
+    });
+
+    btnPrintCert.addEventListener('click', () => {
+      window.print();
+    });
+
+    // Confetti Engine - Canvas Renderer
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let animationFrameId = null;
+    let colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+    let confettiArray = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+
+    class ConfettiParticle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -100 - 10;
+        this.size = Math.random() * 8 + 4;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = Math.random() * 2 - 1;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 4 - 2;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+        if (this.y > canvas.height) {
+          this.y = -20;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    function startConfetti() {
+      resizeCanvas();
+      confettiArray = [];
+      for (let i = 0; i < 75; i++) {
+        confettiArray.push(new ConfettiParticle());
+      }
+      animateConfetti();
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      animationFrameId = requestAnimationFrame(animateConfetti);
+    }
+
+    function stopConfetti() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (!summaryModal.classList.contains('hidden')) {
+        resizeCanvas();
+      }
+    });
+
+  </script>
 </body>
-
 </html>
